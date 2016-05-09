@@ -3,12 +3,12 @@ extern crate url;
 
 use std::fs::File;
 use std::io::{BufReader, Read};
-use hyper::{Url, Client};
+use hyper::Client;
 use url::percent_encoding;
 
 
 fn load_token() -> Option<String> {
-    println!("Loading token...");
+    // println!("Loading token...");
 
     let mut text = String::new();
     let mut reader = match File::open("access_token.txt") {
@@ -46,12 +46,13 @@ fn shorten(token: String, long_url: String) -> String {
         token = token
     );
 
-    println!("URL: {}", url);
+    // println!("URL: {}", url);
 
     let client = Client::new();
     let mut response = client.get(&url).send().unwrap();
 
     let mut short_url = String::new();
+    // TODO: Check result of the following operation
     response.read_to_string(&mut short_url);
     short_url
 }
@@ -59,15 +60,7 @@ fn shorten(token: String, long_url: String) -> String {
 
 fn main() {
     let token = load_token().unwrap();
-    println!("Using token '{}'.", token);
+    // println!("Using token '{}'.", token);
 
-    println!("{}", shorten(token, encode_url(get_url())));
-
-    // take URL as input
-
-    // Remove forbidden chars
-
-    // make API call
-
-    // return :)
+    println!("{}", shorten(token, encode_url(get_url())).trim().to_string());
 }
