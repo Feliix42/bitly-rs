@@ -1,0 +1,10 @@
+[package]
+name = "bitly"
+version = "0.1.0"
+authors = ["Felix Wittwer <dev@felixwittwer.de>"]
+
+[dependencies]
+hyper = "0.9.1"
+
+[dependencies.url]
+git = "https://github.com/servo/rust-url"
