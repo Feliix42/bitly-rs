@@ -7,7 +7,7 @@ This is a small program that shortens a URL, using the [Bit.ly service](https://
 
 - [x] Basic functionality
 - [ ] manage OAuth2 Access Token more elegant
-- [ ] take URL as command line argument
+- [x] take URL as command line argument
 - [ ] Error Handling (e.g. no network)
 - [ ] Better URL parsing
 - [ ] change/remove token
