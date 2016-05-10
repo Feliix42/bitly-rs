@@ -6,7 +6,6 @@ use std::io;
 use std::io::{BufReader, Read, BufWriter, Write};
 
 pub fn load_token() -> Option<String> {
-    // println!("Loading token...");
 
     // exists path?
     if let Some(mut home) = env::home_dir() {
@@ -25,7 +24,7 @@ pub fn load_token() -> Option<String> {
             return add_token(&home);
         }
     } else {
-        println!("Could not find your home directory!");
+        println!("Could not find your home directory.");
         return None;
     }
 }
@@ -43,7 +42,10 @@ fn read_token_from_file(token_file: &Path) -> Option<String> {
 
     match reader.read_to_string(&mut text) {
         Ok(_)  => Some(text.trim().to_string()),
-        Err(_) => None
+        Err(e) => {
+            println!("Unable to read from file: {}", e);
+            None
+        }
     }
 }
 
@@ -53,20 +55,23 @@ fn add_token(token_file: &Path) -> Option<String> {
     println!("Please enter your Bit.ly token:");
     match io::stdin().read_line(&mut bitly_token) {
         Ok(_)  => (),
-        Err(_) => return None
+        Err(e) => {
+            println!("Could not read from the command line: {}", e);
+            return None;
+        }
     };
 
     let mut writer = match File::create(token_file) {
         Ok(handle) => BufWriter::new(handle),
-        Err(_)     => {
-            println!("Could not open the file!");
+        Err(e)     => {
+            println!("Could not open the file: {}", e);
             return None;
         }
     };
 
     match writer.write(&bitly_token.trim().to_string().clone().into_bytes()) {
         Ok(_)  => (),
-        Err(_) => println!("Unable to write to the file. Continuing without saving the token.")
+        Err(e) => println!("Unable to write to file: {} \n Continuing without saving...", e)
     }
 
     Some(bitly_token)

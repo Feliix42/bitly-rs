@@ -7,7 +7,6 @@ use std::io::Read;
 use hyper::Client;
 use url::percent_encoding;
 
-
 mod token;
 
 use token::load_token;
@@ -29,21 +28,20 @@ fn shorten(token: &str, long_url: &str) -> String {
         token = token
     );
 
-    // println!("URL: {}", url);
-
     let client = Client::new();
     let mut response = client.get(&url).send().unwrap();
 
     let mut short_url = String::new();
-    // TODO: Check result of the following operation
     response.read_to_string(&mut short_url).unwrap();
     short_url
 }
 
 
 fn main() {
-    let token = load_token().unwrap();
-    // println!("Using token '{}'.", token);
+    let token = match load_token() {
+        Some(t) => t,
+        None    => return
+    };
 
     if let Some(url) = env::args().nth(1) {
         println!("{short}", short = shorten(&token, &encode_url(&url)).trim());
