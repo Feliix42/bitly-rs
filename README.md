@@ -11,7 +11,8 @@ This is a small program that shortens a URL, using the [Bit.ly service](https://
 - [ ] Error Handling (e.g. no network)
 - [ ] Better URL parsing
 - [ ] change/remove token
-- [ ] refactoring
+- [ ] Refactoring
+- [ ] Documentation
 
 
 ## License
