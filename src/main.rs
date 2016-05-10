@@ -1,7 +1,8 @@
 extern crate hyper;
 extern crate url;
 
-use std::io;
+
+use std::env;
 use std::io::Read;
 use hyper::Client;
 use url::percent_encoding;
@@ -10,14 +11,6 @@ use url::percent_encoding;
 mod token;
 
 use token::load_token;
-
-
-fn get_url() -> Result<String, io::Error> {
-    let mut input = String::new();
-    try!(std::io::stdin()
-        .read_line(&mut input));
-    Ok(input.trim().to_string())
-}
 
 
 fn encode_url(long_url: &str) -> String {
@@ -52,5 +45,10 @@ fn main() {
     let token = load_token().unwrap();
     // println!("Using token '{}'.", token);
 
-    println!("{short}", short = shorten(&token, &encode_url(&get_url().unwrap())).trim());
+    if let Some(url) = env::args().nth(1) {
+        println!("{short}", short = shorten(&token, &encode_url(&url)).trim());
+    } else {
+        println!("Usage: bitly [URL]");
+    }
+
 }
