@@ -1,22 +1,22 @@
 extern crate hyper;
 extern crate url;
 
+use std::io;
 use std::io::Read;
 use hyper::Client;
 use url::percent_encoding;
 
 
 mod token;
+
 use token::load_token;
 
 
-fn get_url() -> String { //optional/result
-    // wrap mit try!
+fn get_url() -> Result<String, io::Error> {
     let mut input = String::new();
-    std::io::stdin()
-        .read_line(&mut input)
-        .expect("Could not read input.");
-    input.trim().to_string()
+    try!(std::io::stdin()
+        .read_line(&mut input));
+    Ok(input.trim().to_string())
 }
 
 
@@ -52,5 +52,5 @@ fn main() {
     let token = load_token().unwrap();
     // println!("Using token '{}'.", token);
 
-    println!("{}", shorten(&token, &encode_url(&get_url())).trim());
+    println!("{short}", short = shorten(&token, &encode_url(&get_url().unwrap())).trim());
 }
