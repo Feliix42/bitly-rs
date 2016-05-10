@@ -9,24 +9,24 @@ _As one of my first projects written in the Rust programming languages the code 
 To use this program, follow these steps:
 
 1. Clone the repository with
-```
-$ git clone git@github.com:feliix42/bitly-rs
-```
+  ```
+  $ git clone git@github.com:feliix42/bitly-rs
+  ```
 
 2. Build the project.
-```
-$ cd bitly-rs
-$ cargo build --release
-```
-Of course you can spare the release flag if you want to help me develop this program.
+  ```
+  $ cd bitly-rs
+  $ cargo build --release
+  ```
+  Of course you can spare the release flag if you want to help me develop this program.
 
 3. Run it!
-```
-$ target/release/bitly https://google.com
-Please enter your Bit.ly token:
-[enter your token here]
-http://bit.ly/1NpyVCz
-```
+  ```
+  $ target/release/bitly https://google.com
+  Please enter your Bit.ly token:
+  [enter your token here]
+  http://bit.ly/1NpyVCz
+  ```
 
 ## Usage
 Use `$ bitly [long URL]` to shorten any URL that comes to your mind.
