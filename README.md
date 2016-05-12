@@ -36,8 +36,8 @@ Use `$ bitly [long URL]` to shorten any URL that comes to your mind.
 - [x] Basic functionality
 - [x] manage OAuth2 Access Token more elegant
 - [x] take URL as command line argument
-- [ ] Error Handling (e.g. no network)
-- [ ] Better URL parsing
+- [x] Error Handling (e.g. no network)
+- [x] Better URL parsing
 - [ ] change/remove the saved token
 - [ ] Refactoring
 - [ ] Documentation
