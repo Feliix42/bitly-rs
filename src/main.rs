@@ -5,6 +5,8 @@ extern crate url;
 use std::env;
 use std::io::Read;
 use hyper::Client;
+use hyper::error::Error;
+use hyper::status::StatusCode;
 use url::percent_encoding;
 
 mod token;
@@ -21,7 +23,6 @@ fn encode_url(long_url: &str) -> String {
 
 
 fn shorten(token: &str, long_url: &str) -> String {
-    // TODO: Error Handling?!
     let url = format!(
         "https://api-ssl.bitly.com/v3/shorten?longUrl={url}&access_token={token}&format=txt",
         url = long_url,
@@ -29,11 +30,24 @@ fn shorten(token: &str, long_url: &str) -> String {
     );
 
     let client = Client::new();
-    let mut response = client.get(&url).send().unwrap();
+    let mut response = match client.get(&url).send() {
+        Ok(resp)          => resp,
+        Err(Error::Io(_)) => return "Could not access network. Make sure you have an active network connection.".to_string(),
+        Err(e)            => return format!("An error occured: {}", e),
+    };
 
     let mut short_url = String::new();
     response.read_to_string(&mut short_url).unwrap();
-    short_url
+
+    match response.status {
+        StatusCode::Ok                  => short_url,
+        StatusCode::InternalServerError => match short_url.trim() {
+            "INVALID_URI" => "The URL you entered is invalid.".to_string(),
+            "INVALID_ARG_ACCESS_TOKEN" => "Your access token is invalid or expired.".to_string(),
+            _                          => format!("An error occured: {}", short_url.trim()),
+        },
+        _                               => format!("A fatal error occured: {}", response.status),
+    }
 }
 
 
