@@ -1,5 +1,7 @@
 # bitly.rs
 
+[![Build Status](https://travis-ci.org/Feliix42/bitly-rs.svg?branch=master)](https://travis-ci.org/Feliix42/bitly-rs)
+
 This is a small command line program that shortens a URL, using the [Bit.ly service](https://bitly.com).
 
 _As one of my first projects written in the Rust programming languages the code in this repository might not be the best in terms of style. Please, feel free to open an issue or a PR to help me improve my code!_
@@ -27,6 +29,7 @@ To use this program, follow these steps:
   [enter your token here]
   http://bit.ly/1NpyVCz
   ```
+  Note that you will be asked for a Bit.ly access token the first time you run the script. It will be saved to `~/.bitly-rs`.
 
 ## Usage
 Use `$ bitly [long URL]` to shorten any URL that comes to your mind.
